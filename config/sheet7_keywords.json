@@ -1,0 +1,9 @@
+{
+  "india_terms": ["India", "Indian", "Bharat", "South Asia", "Indo-Pacific", "インド", "南アジア"],
+  "china_plus_one_terms": ["China+1", "China plus one", "China Plus One", "supply chain diversification", "supply-chain resilience", "derisking", "de-risking", "nearshoring", "friendshoring", "reshoring", "relocation", "manufacturing shift", "production transfer"],
+  "action_terms": ["invest", "investment", "capex", "capital expenditure", "expand", "expansion", "new facility", "plant", "factory", "manufacturing", "production base", "subsidiary", "branch", "office", "regional hub", "acquisition", "joint venture", "memorandum", "MoU", "tender offer", "restructuring"],
+  "policy_terms": ["USTR", "tariff", "customs", "market access", "foreign affairs", "trade", "export controls", "sanctions", "FDI", "data localization", "digital trade", "AI", "telecom", "pharma", "medical devices", "defence", "defense", "semiconductors", "energy", "infrastructure", "tax treaty"],
+  "ip_terms": ["patent", "patent application", "PCT", "national phase", "India national phase", "publication", "grant", "applicant", "assignee", "owner", "trademark", "brand", "Madrid", "intellectual property", "IP filing"],
+  "japanese_terms": ["インド", "生産拠点", "工場", "製造", "設備投資", "子会社", "買収", "供給網", "サプライチェーン", "中国"]
+}
+

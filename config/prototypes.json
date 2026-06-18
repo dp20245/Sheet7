@@ -1,0 +1,35 @@
+{
+  "india_interest": [
+    "The company names India as a growth market or strategic market.",
+    "The company is evaluating India for expansion or market entry."
+  ],
+  "india_investment": [
+    "The company is investing in India.",
+    "The company is opening a plant, factory, office, subsidiary, or manufacturing base in India."
+  ],
+  "india_ip_market_entry": [
+    "The company filed a patent connected to India.",
+    "The patent record shows Indian national phase, Indian publication, or India family member."
+  ],
+  "china_plus_one": [
+    "The company is diversifying supply chains away from China.",
+    "The company is considering India as a second manufacturing base."
+  ],
+  "india_policy_lobbying": [
+    "The company is lobbying or submitting comments about India policy, tariffs, market access, data, trade, or regulation.",
+    "A policy or consultation record names the company in relation to India."
+  ],
+  "india_risk_or_friction": [
+    "The company delayed or reconsidered India expansion because of regulation, tariffs, permitting, market access, or other friction.",
+    "The company describes India as a material barrier to a planned commercial decision."
+  ],
+  "chose_competitor_market": [
+    "The company chose Vietnam or another competitor market instead of India.",
+    "The company is expanding in a competitor market as part of China plus one strategy."
+  ],
+  "boilerplate_or_noise": [
+    "India appears only in a generic list of countries.",
+    "The text is a standard risk factor or generic geographic mention with no specific action."
+  ]
+}
+
