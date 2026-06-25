@@ -1,0 +1,55 @@
+name: Run Pipeline
+
+# Manual trigger only — no scheduled/cron run.
+on:
+  workflow_dispatch:
+    inputs:
+      connector:
+        description: "Which connector to run"
+        type: choice
+        required: true
+        default: both
+        options:
+          - both
+          - sec
+          - lda
+      sec_start_date:
+        description: "SEC: only filings on/after this date (YYYY-MM-DD)"
+        required: false
+        default: "2024-01-01"
+      sec_max_pages:
+        description: "SEC: EFTS pages per query"
+        required: false
+        default: "2"
+      lda_years_back:
+        description: "LDA: how many years back to search"
+        required: false
+        default: "3"
+      lda_max_pages:
+        description: "LDA: max pages per query"
+        required: false
+        default: "20"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_SHEETS_SPREADSHEET_ID: ${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+      LDA_API_KEY: ${{ secrets.LDA_API_KEY }}
+      SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -U pip
+      - run: pip install -e .
+      - name: Run SEC
+        if: ${{ inputs.connector == 'sec' || inputs.connector == 'both' }}
+        run: sheet7 run-sec --start-date "${{ inputs.sec_start_date }}" --max-pages "${{ inputs.sec_max_pages }}" --verbose
+      - name: Run LDA
+        if: ${{ inputs.connector == 'lda' || inputs.connector == 'both' }}
+        run: sheet7 run-lda --years-back "${{ inputs.lda_years_back }}" --max-pages "${{ inputs.lda_max_pages }}"
+      - name: Write rankings
+        run: sheet7 rankings --verbose
