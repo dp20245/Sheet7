@@ -44,7 +44,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install -U pip
-      - run: pip install -e .
+      - run: pip install -e ".[sheets]"
       - name: Run SEC
         if: ${{ inputs.connector == 'sec' || inputs.connector == 'both' }}
         run: sheet7 run-sec --start-date "${{ inputs.sec_start_date }}" --max-pages "${{ inputs.sec_max_pages }}" --verbose
