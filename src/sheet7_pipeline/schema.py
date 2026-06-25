@@ -17,7 +17,6 @@ SignalLabel = Literal[
     "india_interest",
     "india_investment",
     "india_ip_market_entry",
-    "india_entity_spine",
     "china_plus_one",
     "india_policy_lobbying",
     "india_risk_or_friction",
@@ -25,8 +24,29 @@ SignalLabel = Literal[
     "boilerplate_or_noise",
 ]
 
+IntentType = Literal[
+    "market_entry",
+    "expansion",
+    "diversification",
+    "supply_chain_shift",
+    "regulatory_positioning",
+    "ip_market_entry",
+    "none",
+]
+IntentTense = Literal[
+    "stated_future",
+    "in_progress",
+    "completed",
+    "speculated_by_third_party",
+    "unclear",
+    "none",
+]
 Polarity = Literal["positive", "negative", "mixed", "neutral"]
 Confidence = Literal["low", "medium", "high"]
+HumanReviewStatus = Literal["unreviewed", "confirmed", "rejected"]
+LLMReviewStatus = Literal["pending", "sent", "reviewed", "skipped"]
+SupersessionStatus = Literal["current", "superseded"]
+JudgmentAgreement = Literal["agree", "disagree", ""]
 
 
 class ClassifierVote(BaseModel):
@@ -35,28 +55,51 @@ class ClassifierVote(BaseModel):
 
 
 class EvidenceEvent(BaseModel):
-    run_date: datetime
-    signal_date: datetime | None = None
     event_id: str
+    run_id: str
+    retrieved_at: datetime
+    filing_date: datetime | None = None
     source: str
     country_system: str
     disclosure_layer: str
-    company: str
-    sectors: list[str] = Field(default_factory=list)
-    entity_ids: dict[str, str] = Field(default_factory=dict)
+    company_name: str
+    entity_key: str
+    company_ids: dict[str, str] = Field(default_factory=dict)
+    sector: str = ""
     document_type: str
     source_url: HttpUrl
     evidence_text: str
+    sections_hit: list[str] = Field(default_factory=list)
     matched_terms: list[str] = Field(default_factory=list)
     signal_label: SignalLabel
-    polarity: Polarity
-    embedding: ClassifierVote
-    zero_shot: ClassifierVote
-    final_score: int = Field(ge=0, le=100)
-    confidence: Confidence
-    classifier_status: ClassifierStatus
+    candidate_score: int = Field(ge=0, le=100)
+    candidate_label: SignalLabel
+    candidate_reason: str = ""
+    likely_noise: bool = False
+    llm_review_status: LLMReviewStatus = "pending"
+    decay_weight: float = Field(default=1.0, ge=0)
+    human_review_status: HumanReviewStatus = "unreviewed"
+    notes: str = ""
+
+    intent_type: IntentType = "none"
+    intent_tense: IntentTense = "none"
+    is_foreign_entering_india: bool = False
+    intent_evidence: str = ""
+    intent_confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+    final_score: int = Field(default=0, ge=0, le=100)
+    classifier_status: ClassifierStatus = ClassifierStatus.NEEDS_RESEARCH
+    supersession_status: SupersessionStatus = "current"
+    superseded_by: str = ""
+    promotion_reason: str = ""
+    judgment_agreement: JudgmentAgreement = ""
+    signal_summary: str = ""
+    why_it_matters: str = ""
+    suggested_bd_angle: str = ""
+    bd_context: str = ""
+    why_now: str = ""
+    enriched_at: datetime | None = None
+    enrichment_model: str = ""
 
 
 class SheetRow(BaseModel):
     values: list[str]
-

@@ -1,5 +1,7 @@
 .DS_Store
 .env
+SHEET7SECRETS
+secrets/
 .venv/
 __pycache__/
 .pytest_cache/
@@ -10,6 +12,7 @@ build/
 data/raw/
 data/cache/
 exports/
+probe_out/
 *.csv
 *.jsonl
 !.env.example
